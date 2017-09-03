@@ -1,0 +1,62 @@
+
+buildscript {
+    dependencies {
+        classpath fileTree(dir: 'extfiles', include: '*.jar', excludes: ['*javadoc.jar', '*sources.jar'])
+    }
+}
+
+plugins {
+    id 'java'
+}
+
+apply plugin: 'java'
+
+defaultTasks 'clean', 'build'
+
+jar {
+    from {
+        configurations.compile.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+        configurations.runtime.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+
+    manifest {
+        attributes 'Main-Class': 'org.Parser'
+    }
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven{
+        url 'https://oss.sonatype.org/content/repositories/snapshots/'
+    }
+    flatDir {
+        dirs 'extlibs'
+    }
+}
+
+
+dependencies {
+    // https://mvnrepository.com/artifact/edu.stanford.nlp/stanford-corenlp
+    compile group: 'edu.stanford.nlp', name: 'stanford-corenlp', version: '3.8.0'
+
+    // download language model file separately from here: https://stanfordnlp.github.io/CoreNLP/
+    compile group: 'edu.stanford.nlp', name: 'stanford-corenlp', version: '3.8.0', classifier: 'models'
+     // https://mvnrepository.com/artifact/org.springframework/spring-core
+    compile group: 'org.springframework', name: 'spring-core', version: '4.3.10.RELEASE'
+// https://mvnrepository.com/artifact/org.deeplearning4j/deeplearning4j-core
+ //   compile group: 'org.deeplearning4j', name: 'deeplearning4j-core', version: '0.9.1'
+// https://mvnrepository.com/artifact/de.julielab/aliasi-lingpipe
+//    compile group: 'de.julielab', name: 'aliasi-lingpipe', version: '4.1.0'
+
+}
+
+test {
+    systemProperties = System.getProperties()
+}
