@@ -6,7 +6,7 @@ Java and Python applications for sentiment analysis.
 
 The Java sentiment analysis uses the [Stanford Core NLP library](https://stanfordnlp.github.io/CoreNLP/).
 
-The data to be analyzed should be in the `src/main/resources` folder as a csv file. The name of the csv file can be set in the `src/main/java/org/Parser.java` class. The csv file contains an evaluation of the sentence and the sentence itself. Naturally the program can also be set to just evaluate sentences without any prior classification.
+The data to be analyzed should be in the `src/main/resources` folder as a csv file, with a semicolon ';' as a delimiter. The name of the csv file can be set in the `src/main/java/org/Parser.java` class. The csv file contains an evaluation of the sentence and the sentence itself.
 
 To compile the program
 
@@ -17,6 +17,10 @@ The English model file has to be downloaded separately, and can be found [here](
 To run the program, go to the `build/libs` directory and run
 
     java -jar sentimentprogram.jar
+
+Alternatively, the program can be run with gradle like this:
+
+    ./gradlew run
 
 ## Python sentiment analysis
 
