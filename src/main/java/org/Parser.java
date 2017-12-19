@@ -12,85 +12,86 @@ import java.io.InputStreamReader;
 import java.util.*;
 import java.util.Map;
 
+//import Sentence;
+
+
 public class Parser {
+  public Parser(){
 
-    public static void main(String[] args) {
+  }
 
-//      String csvFile = "answers_reviewed.csv";
-        String csvFile = "test_set.csv";
-        String cvsSplitBy = ";";
+
+  //      String csvFile = "answers_reviewed.csv";
+        String csvFile = "test_set_1.csv";
+        String delimiter = ";";
         int nRandomSentences = 5;
 
-        List<String[]> results = new ArrayList<String[]>();
-        myUtil myUtil = new myUtil();
 
-        ClassPathResource resource = new ClassPathResource(csvFile);
-        SentimentClassifier sentimentClassifier = new SentimentClassifier();
+  public List<Sentence> parseFile(){
+    List<String[]> results = new ArrayList<String[]>();
+    myUtil myUtil = new myUtil();
 
-        try (InputStream inputStream = resource.getInputStream()) {
+    ClassPathResource resource = new ClassPathResource(csvFile);
+    List<Sentence> parsedSet = new ArrayList<Sentence>();
 
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-            List<Sentence> posSentences = new ArrayList<Sentence>();
-            List<Sentence> neuSentences = new ArrayList<Sentence>();
-            List<Sentence> negSentences = new ArrayList<Sentence>();
+    try (InputStream inputStream = resource.getInputStream()) {
 
-            while ((line = bufferedReader.readLine()) != null) {
-                String [] lineElements = line.split(cvsSplitBy);
-                results.add(new String [] {lineElements[0], lineElements[1]});
-                Sentence s = new Sentence();
-                switch (lineElements[0]){
-                    case "1":
-                        s.setSentence(lineElements[1]);
-                        s.setActualSentiment(1);
-                        s.setPredictedSentiment(sentimentClassifier.classifySentiment(lineElements[1]));
-                        negSentences.add(s);
-                        break;
-                    case "2":
-                        s.setSentence(lineElements[1]);
-                        s.setActualSentiment(2);
-                        s.setPredictedSentiment(sentimentClassifier.classifySentiment(lineElements[1]));
-                        neuSentences.add(s);
-                        break;
-                    case "3":
-                        s.setSentence(lineElements[1]);
-                        s.setActualSentiment(3);
-                        s.setPredictedSentiment(sentimentClassifier.classifySentiment(lineElements[1]));
-                        posSentences.add(s);
-                        break;
-                }
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String line;
+        List<Sentence> posSentences = new ArrayList<Sentence>();
+        List<Sentence> neuSentences = new ArrayList<Sentence>();
+        List<Sentence> negSentences = new ArrayList<Sentence>();
+
+        while ((line = bufferedReader.readLine()) != null) {
+            String [] lineElements = line.split(delimiter);
+            if(lineElements[0].equals("Actual sentiment")){
+              continue;
             }
-            inputStream.close();
+//            results.add(new String [] {lineElements[0], lineElements[1]});
+            Sentence s = new Sentence();
+            s.setActualSentiment(Integer.parseInt(lineElements[0]));
+            s.setSentence(lineElements[1]);
+            parsedSet.add(s);
+/*
+            switch (lineElements[0]){
+                case "1":
+                    s.setSentence(lineElements[1]);
+                    s.setActualSentiment(1);
+                    s.setPredictedSentiment(sentimentClassifier.classifySentiment(lineElements[1]));
+                    negSentences.add(s);
+  System.out.println(sentimentClassifier.classifySentiment(lineElements[1]) + " " + lineElements[1] );
+                    break;
+                case "2":
+                    s.setSentence(lineElements[1]);
+                    s.setActualSentiment(2);
+                    s.setPredictedSentiment(sentimentClassifier.classifySentiment(lineElements[1]));
+                    neuSentences.add(s);
+  System.out.println(sentimentClassifier.classifySentiment(lineElements[1]) + " " + lineElements[1] );
+                    break;
+                case "3":
+                    s.setSentence(lineElements[1]);
+                    s.setActualSentiment(3);
+                    s.setPredictedSentiment(sentimentClassifier.classifySentiment(lineElements[1]));
+                    posSentences.add(s);
+  System.out.println(sentimentClassifier.classifySentiment(lineElements[1]) + " " + lineElements[1] );
+                    break;
+            }
+*/
 
-            List<Sentence> testSet = new ArrayList<Sentence>();
 
-            testSet.addAll(myUtil.selectRandomSentences(posSentences, nRandomSentences));
-            testSet.addAll(myUtil.selectRandomSentences(neuSentences, nRandomSentences));
-            testSet.addAll(myUtil.selectRandomSentences(negSentences, nRandomSentences));
-
-            System.out.println(testSet.size());
-
-            ConfusionMatrix cm = new ConfusionMatrix();
-            testSet.forEach((i)->{
-                cm.increaseValue(Integer.toString(i.getActualSentiment()), Integer.toString(i.getPredictedSentiment()));
-            });
-
-            System.out.println("hello");
-            System.out.println(cm.toString());
-            System.out.println(cm.getCohensKappa());
-            System.out.println(cm.getAccuracy());
-            System.out.println(cm.getRecallForLabels());
-            System.out.println(cm.getPrecisionForLabels());
-            System.out.println(cm.getTotalSum());
-            Map<String, Double> labelPrecisions = cm.getPrecisionForLabels();
-            Map<String, Double> labelRecalls = cm.getRecallForLabels();
-
-           }
-
-         catch (IOException e) {
-            e.printStackTrace();
         }
+        inputStream.close();
+/*
+        parsedSet.addAll(posSentences);
+        parsedSet.addAll(neuSentences);
+        parsedSet.addAll(negSentences);
+*/
+      }
 
+     catch (IOException e) {
+        e.printStackTrace();
     }
+    return parsedSet;
 
+}
 }
