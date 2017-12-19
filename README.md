@@ -35,4 +35,21 @@ For sentiment analysis the [TextBlob](http://textblob.readthedocs.io/en/dev/inde
 
 ## Other
 
-The software was used for a paper based on my Master of technology thesis.
+The software was used for a [paper](doc/ltc-020-OmarEl-Begawy.pdf) based on my Master of technology thesis. The paper is in the `doc` folder.
+The paper's BibTex entry is
+
+    @inproceedings{el-begawy2017,
+    author         = {El-Begawy, Omar and Wikstr\"{o}m, Robin and Toivonen, Hannu},
+    editor         = {Vetulani, Zygmunt and Paroubek, Patrick},
+    title          = {Sentiment Analysis of Customer Feedback in the Business Domain},
+    date           = {2017},
+    booktitle      = {Human Language Technologies as a Challenge for Computer Science and Linguistics},
+    booksubtitle   = {8th Language & Technology Conference , 2017, },
+    booktitleaddon = {Proceedings of the Eighth Nobel Symposium},
+    eventdate      = {2017-11-17/2017-11-19},
+    venue          = {Poznań, Poland},
+    publisher      = {Fundacja Uniwersity im. Adama Mickiewicza w Poznaniu},
+    location       = {Poznań, Poland},
+    pages          = {59-63},
+    isbn           = {978-83-64864-94-0},
+    }
