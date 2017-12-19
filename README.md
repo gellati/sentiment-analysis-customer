@@ -35,7 +35,7 @@ For sentiment analysis the [TextBlob](http://textblob.readthedocs.io/en/dev/inde
 
 ## Other
 
-The software was used for a [paper](doc/ltc-020-OmarEl-Begawy.pdf) based on my Master of technology thesis. The paper is in the `doc` folder.
+The software was used for a [paper](doc/ltc-020-OmarEl-Begawy.pdf) based on my Master of technology thesis. The paper was submitted to the [LTC2017 conference](http://ltc.amu.edu.pl/). The paper is in the `doc` folder.
 The paper's BibTex entry is
 
     @inproceedings{el-begawy2017,
