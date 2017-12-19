@@ -12,8 +12,8 @@ def sentimentRange(s):
         return 2
     if s > 0.33 and s <= 1.00:
         return 3
-#infile = "../src/main/resources/test_set.csv"
-infile = "../src/main/resources/answers_reviewed.csv"
+infile = "../src/main/resources/test_set_1.csv"
+#infile = "../src/main/resources/answers_reviewed.csv"
 
 csvreader = csv.reader(io.open(infile, 'rb'), delimiter=';', quotechar='"') #, coding='utf-8')
 csvreader.next()
@@ -27,6 +27,7 @@ for row in csvreader:
     s = analyzer.polarity_scores(row[1].decode('utf-8'))
     y_true.append(int(row[0]))
     y_pred.append(sentimentRange(s['compound']))
+    print "{} - {}".format(sentimentRange(s['compound']), s['compound'])
 
 precision, recall, fscore, support = score(y_true, y_pred)
 print confusion_matrix(y_true, y_pred)
